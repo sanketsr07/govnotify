@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const API = "http://127.0.0.1:8000"
+const API = "https://govnotify-ecxe.onrender.com"
 const CATEGORIES = ["All", "Police", "Army", "SSC", "Railway", "Banking", "UPSC", "Post Office", "KPSC"]
 const CAT_CONFIG = {
   Police:       { color: "#3B82F6", emoji: "👮" },
