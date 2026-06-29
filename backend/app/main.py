@@ -56,18 +56,19 @@ def scrape_now(db: Session = Depends(get_db)):
 
 @app.post("/add-test-data")
 def add_test_data(db: Session = Depends(get_db)):
-    test_data = [
-        {"title": "Karnataka Police Constable Recruitment 2026", "category": "Police", "source": "Karnataka Police", "link": "https://www.ksp.karnataka.gov.in", "last_date": "03 July 2026"},
-        {"title": "Indian Army Agniveer Recruitment 2027", "category": "Army", "source": "Indian Army", "link": "https://joinindianarmy.nic.in", "last_date": "Coming Soon"},
-        {"title": "SSC GD Constable Recruitment 2026", "category": "SSC", "source": "SSC", "link": "https://ssc.nic.in", "last_date": "December 2026"},
-        {"title": "RPF Constable Recruitment 2026", "category": "Railway", "source": "RPF", "link": "https://indianrailways.gov.in", "last_date": "TBA"},
-        {"title": "SBI Clerk Recruitment 2026", "category": "Banking", "source": "SBI", "link": "https://sbi.co.in/careers", "last_date": "August 2026"},
-        {"title": "IBPS PO Recruitment 2026", "category": "Banking", "source": "IBPS", "link": "https://ibps.in", "last_date": "September 2026"},
-        {"title": "UPSC Civil Services 2027", "category": "UPSC", "source": "UPSC", "link": "https://upsc.gov.in", "last_date": "February 2027"},
-        {"title": "India Post GDS Recruitment 2026", "category": "Post Office", "source": "India Post", "link": "https://indiapost.gov.in", "last_date": "October 2026"},
-        {"title": "KPSC Group C Recruitment 2026", "category": "KPSC", "source": "KPSC", "link": "https://kpsc.kar.nic.in", "last_date": "November 2026"},
-        {"title": "Karnataka Armed Police CAR/DAR 2026", "category": "Police", "source": "Karnataka Police", "link": "https://www.ksp.karnataka.gov.in", "last_date": "22 July 2026"},
-    ]
+ 
+   test_data = [
+    {"title": "Karnataka Police Constable Recruitment 2026", "category": "Police", "source": "Karnataka Police", "link": "https://cetonline.karnataka.gov.in/kea/", "last_date": "03 July 2026"},
+    {"title": "Indian Army Agniveer Recruitment 2027", "category": "Army", "source": "Indian Army", "link": "https://joinindianarmy.nic.in/NotificationList.aspx", "last_date": "Coming Soon"},
+    {"title": "SSC GD Constable Recruitment 2026", "category": "SSC", "source": "SSC", "link": "https://ssc.gov.in/portal/recruitment-notices", "last_date": "December 2026"},
+    {"title": "RPF Constable Recruitment 2026", "category": "Railway", "source": "RPF", "link": "https://rpf.indianrailways.gov.in", "last_date": "TBA"},
+    {"title": "SBI Clerk Recruitment 2026", "category": "Banking", "source": "SBI", "link": "https://bank.sbi/web/careers/recruitment", "last_date": "August 2026"},
+    {"title": "IBPS PO Recruitment 2026", "category": "Banking", "source": "IBPS", "link": "https://www.ibps.in/recruitment-notification/", "last_date": "September 2026"},
+    {"title": "UPSC Civil Services 2027", "category": "UPSC", "source": "UPSC", "link": "https://upsc.gov.in/examinations/active-examinations", "last_date": "February 2027"},
+    {"title": "India Post GDS Recruitment 2026", "category": "Post Office", "source": "India Post", "link": "https://indiapostgdsonline.gov.in", "last_date": "October 2026"},
+    {"title": "KPSC Group C Recruitment 2026", "category": "KPSC", "source": "KPSC", "link": "https://kpsc.kar.nic.in/recruitment.aspx", "last_date": "November 2026"},
+    {"title": "Karnataka Armed Police CAR/DAR 2026", "category": "Police", "source": "Karnataka Police", "link": "https://cetonline.karnataka.gov.in/kea/", "last_date": "22 July 2026"},
+]
     for item in test_data:
         exists = db.query(models.Notification).filter_by(title=item["title"]).first()
         if not exists:
