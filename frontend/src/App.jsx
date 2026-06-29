@@ -3,14 +3,14 @@ import { useEffect, useState } from "react"
 const API = "https://govnotify-ecxe.onrender.com"
 const CATEGORIES = ["All", "Police", "Army", "SSC", "Railway", "Banking", "UPSC", "Post Office", "KPSC"]
 const CAT_CONFIG = {
-  Police:        { color: "#60A5FA", bg: "#1E3A5F", emoji: "👮" },
-  Army:          { color: "#34D399", bg: "#1A3A2A", emoji: "🪖" },
-  SSC:           { color: "#FB923C", bg: "#3A1F0A", emoji: "📋" },
-  Railway:       { color: "#C084FC", bg: "#2D1A4A", emoji: "🚆" },
-  Banking:       { color: "#FBBF24", bg: "#3A2A00", emoji: "🏦" },
-  UPSC:          { color: "#F472B6", bg: "#3A0A2A", emoji: "📚" },
-  "Post Office": { color: "#2DD4BF", bg: "#0A2A2A", emoji: "📮" },
-  KPSC:          { color: "#F87171", bg: "#3A0A0A", emoji: "🏛️" },
+  Police:        { color: "#3B82F6", emoji: "👮" },
+  Army:          { color: "#22C55E", emoji: "🪖" },
+  SSC:           { color: "#F97316", emoji: "📋" },
+  Railway:       { color: "#A855F7", emoji: "🚆" },
+  Banking:       { color: "#EAB308", emoji: "🏦" },
+  UPSC:          { color: "#EC4899", emoji: "📚" },
+  "Post Office": { color: "#14B8A6", emoji: "📮" },
+  KPSC:          { color: "#F43F5E", emoji: "🏛️" },
 }
 
 function getDaysLeft(dateStr) {
@@ -40,10 +40,10 @@ function getPasswordStrength(pwd) {
 
 function validatePassword(pwd) {
   if (pwd.length < 8) return "At least 8 characters required"
-  if (!/[A-Z]/.test(pwd)) return "At least one uppercase letter required"
-  if (!/[a-z]/.test(pwd)) return "At least one lowercase letter required"
-  if (!/[0-9]/.test(pwd)) return "At least one number required"
-  if (!/[!@#$%^&*]/.test(pwd)) return "At least one special character required (!@#$%^&*)"
+  if (!/[A-Z]/.test(pwd)) return "Uppercase letter required"
+  if (!/[a-z]/.test(pwd)) return "Lowercase letter required"
+  if (!/[0-9]/.test(pwd)) return "Number required"
+  if (!/[!@#$%^&*]/.test(pwd)) return "Special character required (!@#$%^&*)"
   return null
 }
 
@@ -138,101 +138,116 @@ export default function App() {
 
   const strength = getPasswordStrength(form.password)
 
+  // Auth page
   if (page === "login" || page === "register") {
     return (
-      <div style={{ minHeight: "100vh", background: "#09090B", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', sans-serif", padding: 16 }}>
-        <div style={{ width: "100%", maxWidth: 380 }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ width: 48, height: 48, borderRadius: 14, background: "linear-gradient(135deg, #6366F1, #8B5CF6)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 22 }}>🇮🇳</div>
-            <h1 style={{ color: "white", margin: "0 0 6px", fontSize: 22, fontWeight: 700 }}>
-              {page === "login" ? "Welcome back" : "Create account"}
+      <div style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #0a0a0f 0%, #0d0d1a 50%, #0a0a0f 100%)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontFamily: "'Segoe UI', sans-serif", padding: 16,
+        position: "relative", overflow: "hidden"
+      }}>
+        {/* Glow effects */}
+        <div style={{ position: "absolute", top: "20%", left: "30%", width: 300, height: 300, background: "radial-gradient(circle, #6366F133 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "20%", right: "30%", width: 200, height: 200, background: "radial-gradient(circle, #8B5CF633 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ width: "100%", maxWidth: 360, position: "relative", zIndex: 1 }}>
+          {/* Logo */}
+          <div style={{ textAlign: "center", marginBottom: 28 }}>
+            <div style={{ fontSize: 36, marginBottom: 12 }}>🇮🇳</div>
+            <h1 style={{ color: "white", margin: "0 0 4px", fontSize: 20, fontWeight: 700 }}>
+              {page === "login" ? "Sign in to GovNotify" : "Join GovNotify"}
             </h1>
-            <p style={{ color: "#71717A", fontSize: 14, margin: 0 }}>
-              {page === "login" ? "Sign in to your GovNotify account" : "Start tracking government jobs today"}
+            <p style={{ color: "#4B5563", fontSize: 13, margin: 0 }}>
+              {page === "login" ? "Track your dream government job" : "Free forever. No spam."}
             </p>
           </div>
 
-          <div style={{ background: "#18181B", borderRadius: 16, padding: 24, border: "1px solid #27272A" }}>
+          <div style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(20px)", borderRadius: 20, padding: "24px 20px", border: "1px solid rgba(255,255,255,0.08)" }}>
             {page === "register" && (
-              <div style={{ marginBottom: 16 }}>
-                <label style={labelStyle}>Full Name</label>
-                <input placeholder="Sanket S R" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} />
+              <div style={{ marginBottom: 14 }}>
+                <label style={labelS}>Name</label>
+                <input placeholder="Your full name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inpS} />
               </div>
             )}
-
-            <div style={{ marginBottom: 16 }}>
-              <label style={labelStyle}>Email</label>
-              <input placeholder="you@gmail.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} style={inputStyle} />
+            <div style={{ marginBottom: 14 }}>
+              <label style={labelS}>Email</label>
+              <input placeholder="you@gmail.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} style={inpS} />
             </div>
-
-            <div style={{ marginBottom: page === "register" ? 8 : 20 }}>
-              <label style={labelStyle}>Password</label>
+            <div style={{ marginBottom: 12 }}>
+              <label style={labelS}>Password</label>
               <div style={{ position: "relative" }}>
                 <input
-                  placeholder={page === "register" ? "Min 8 chars, A-Z, 0-9, !@#" : "••••••••"}
+                  placeholder={page === "register" ? "Strong password" : "••••••••"}
                   type={showPassword ? "text" : "password"}
                   value={form.password}
                   onChange={e => setForm({ ...form, password: e.target.value })}
-                  style={{ ...inputStyle, paddingRight: 40 }}
+                  style={{ ...inpS, paddingRight: 50 }}
                 />
-                <button onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#52525B", cursor: "pointer", fontSize: 14 }}>
-                  {showPassword ? "Hide" : "Show"}
+                <button onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#4B5563", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>
+                  {showPassword ? "HIDE" : "SHOW"}
                 </button>
               </div>
             </div>
 
             {page === "register" && form.password.length > 0 && (
-              <div style={{ marginBottom: 16 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                  <span style={{ color: "#52525B", fontSize: 12 }}>Password strength</span>
-                  <span style={{ color: strength.color, fontSize: 12, fontWeight: 600 }}>{strength.label}</span>
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ color: "#4B5563", fontSize: 11 }}>Strength</span>
+                  <span style={{ color: strength.color, fontSize: 11, fontWeight: 600 }}>{strength.label}</span>
                 </div>
-                <div style={{ background: "#27272A", borderRadius: 4, height: 3 }}>
-                  <div style={{ height: "100%", width: strength.width, background: strength.color, borderRadius: 4, transition: "all 0.3s" }} />
+                <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 99, height: 3 }}>
+                  <div style={{ height: "100%", width: strength.width, background: strength.color, borderRadius: 99, transition: "all 0.3s" }} />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginTop: 10 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                   {[
-                    { rule: /.{8,}/, label: "8+ characters" },
-                    { rule: /[A-Z]/, label: "Uppercase" },
-                    { rule: /[a-z]/, label: "Lowercase" },
-                    { rule: /[0-9]/, label: "Number" },
-                    { rule: /[!@#$%^&*]/, label: "Special char" },
+                    { rule: /.{8,}/, label: "8+ chars" },
+                    { rule: /[A-Z]/, label: "A-Z" },
+                    { rule: /[a-z]/, label: "a-z" },
+                    { rule: /[0-9]/, label: "0-9" },
+                    { rule: /[!@#$%^&*]/, label: "!@#" },
                   ].map(({ rule, label }) => (
-                    <div key={label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: rule.test(form.password) ? "#22C55E" : "#3F3F46", flexShrink: 0 }} />
-                      <span style={{ color: rule.test(form.password) ? "#22C55E" : "#52525B", fontSize: 11 }}>{label}</span>
-                    </div>
+                    <span key={label} style={{
+                      padding: "2px 8px", borderRadius: 99, fontSize: 11,
+                      background: rule.test(form.password) ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.04)",
+                      color: rule.test(form.password) ? "#22C55E" : "#4B5563",
+                      border: `1px solid ${rule.test(form.password) ? "#22C55E44" : "transparent"}`
+                    }}>{label}</span>
                   ))}
                 </div>
               </div>
             )}
 
             {formError && (
-              <div style={{ background: "#1C0A0A", border: "1px solid #7F1D1D", borderRadius: 8, padding: "10px 12px", marginBottom: 16 }}>
-                <p style={{ color: "#FCA5A5", fontSize: 13, margin: 0 }}>{formError}</p>
+              <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 8, padding: "8px 12px", marginBottom: 14 }}>
+                <p style={{ color: "#FCA5A5", fontSize: 12, margin: 0 }}>{formError}</p>
               </div>
             )}
 
             <button onClick={() => handleAuth(page)} disabled={authLoading} style={{
-              width: "100%", padding: "11px", borderRadius: 10,
-              background: authLoading ? "#3F3F46" : "#6366F1",
+              width: "100%", padding: "12px",
+              borderRadius: 12,
+              background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
               color: "white", border: "none", fontSize: 14,
               fontWeight: 600, cursor: authLoading ? "not-allowed" : "pointer",
-              marginBottom: 16, transition: "background 0.2s"
+              marginBottom: 14, opacity: authLoading ? 0.7 : 1,
+              boxShadow: "0 8px 20px rgba(99,102,241,0.3)"
             }}>
-              {authLoading ? "Please wait..." : page === "login" ? "Sign in" : "Create account"}
+              {authLoading ? "Please wait..." : page === "login" ? "Sign in →" : "Create account →"}
             </button>
 
-            <p style={{ textAlign: "center", fontSize: 13, color: "#52525B", margin: 0 }}>
-              {page === "login" ? "No account? " : "Have account? "}
-              <span onClick={() => { setPage(page === "login" ? "register" : "login"); setFormError(""); setForm({ name: "", email: "", password: "" }) }} style={{ color: "#818CF8", cursor: "pointer", fontWeight: 500 }}>
-                {page === "login" ? "Sign up" : "Sign in"}
+            <p style={{ textAlign: "center", fontSize: 12, color: "#4B5563", margin: 0 }}>
+              {page === "login" ? "New here? " : "Already joined? "}
+              <span onClick={() => { setPage(page === "login" ? "register" : "login"); setFormError(""); setForm({ name: "", email: "", password: "" }) }}
+                style={{ color: "#818CF8", cursor: "pointer", fontWeight: 600 }}>
+                {page === "login" ? "Create account" : "Sign in"}
               </span>
             </p>
           </div>
 
-          <p onClick={() => { setPage("home"); setFormError("") }} style={{ textAlign: "center", fontSize: 13, color: "#3F3F46", cursor: "pointer", marginTop: 16 }}>
-            ← Back to home
+          <p onClick={() => { setPage("home"); setFormError("") }} style={{ textAlign: "center", fontSize: 12, color: "#374151", cursor: "pointer", marginTop: 16 }}>
+            ← Back
           </p>
         </div>
       </div>
@@ -240,118 +255,121 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#09090B", color: "white", fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#07070c", fontFamily: "'Segoe UI', sans-serif", color: "white" }}>
 
-      {/* Navbar */}
-      <nav style={{ borderBottom: "1px solid #18181B", padding: "14px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, background: "#09090B", zIndex: 100 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #6366F1, #8B5CF6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🇮🇳</div>
-          <span style={{ fontWeight: 700, fontSize: 16, color: "white" }}>GovNotify</span>
+      {/* Top nav */}
+      <header style={{ padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.05)", position: "sticky", top: 0, background: "rgba(7,7,12,0.9)", backdropFilter: "blur(12px)", zIndex: 100 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 18 }}>🇮🇳</span>
+          <span style={{ fontWeight: 700, fontSize: 15, letterSpacing: -0.3 }}>GovNotify</span>
+          <span style={{ fontSize: 10, color: "#22C55E", background: "rgba(34,197,94,0.1)", padding: "2px 6px", borderRadius: 99, border: "1px solid rgba(34,197,94,0.2)", marginLeft: 4 }}>LIVE</span>
         </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
           {user ? (
             <>
-              <button onClick={() => setPage(page === "bookmarks" ? "home" : "bookmarks")} style={{ ...ghostBtn, color: page === "bookmarks" ? "#818CF8" : "#71717A" }}>
-                {page === "bookmarks" ? "← Jobs" : `⭐ Saved (${bookmarkedIds.length})`}
+              <button onClick={() => setPage(page === "bookmarks" ? "home" : "bookmarks")} style={navPill}>
+                {page === "bookmarks" ? "← All Jobs" : `★ ${bookmarkedIds.length} Saved`}
               </button>
-              <span style={{ color: "#3F3F46", fontSize: 13 }}>|</span>
-              <span style={{ color: "#71717A", fontSize: 13 }}>{user.name.split(" ")[0]}</span>
-              <button onClick={logout} style={ghostBtn}>Sign out</button>
+              <span style={{ color: "#374151", fontSize: 12 }}>{user.name.split(" ")[0]}</span>
+              <button onClick={logout} style={{ ...navPill, color: "#374151" }}>Sign out</button>
             </>
           ) : (
             <>
-              <button onClick={() => { setPage("login"); setFormError("") }} style={ghostBtn}>Sign in</button>
-              <button onClick={() => { setPage("register"); setFormError("") }} style={{ ...ghostBtn, background: "#6366F1", color: "white", border: "none" }}>Sign up</button>
+              <button onClick={() => setPage("login")} style={navPill}>Sign in</button>
+              <button onClick={() => setPage("register")} style={{ ...navPill, background: "rgba(99,102,241,0.15)", color: "#818CF8", borderColor: "rgba(99,102,241,0.3)" }}>Sign up</button>
             </>
           )}
         </div>
-      </nav>
+      </header>
 
-      {/* Hero */}
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "60px 20px 40px", textAlign: "center" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#18181B", border: "1px solid #27272A", borderRadius: 999, padding: "4px 12px", marginBottom: 20 }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E", display: "inline-block" }} />
-          <span style={{ color: "#71717A", fontSize: 12 }}>Live job alerts</span>
-        </div>
-        <h1 style={{ fontSize: 40, fontWeight: 800, margin: "0 0 12px", letterSpacing: -1, color: "white", lineHeight: 1.1 }}>
-          Never miss a<br />
-          <span style={{ background: "linear-gradient(135deg, #818CF8, #C084FC)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>government job</span>
-        </h1>
-        <p style={{ color: "#52525B", fontSize: 15, margin: "0 0 32px", lineHeight: 1.6 }}>
-          Real-time notifications for Army, Police, SSC, Banking and more. All in one place.
-        </p>
-
-        {page === "home" && (
-          <div style={{ position: "relative", maxWidth: 400, margin: "0 auto" }}>
-            <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#3F3F46", fontSize: 15 }}>⌕</span>
+      {/* Hero section */}
+      {page === "home" && (
+        <div style={{ textAlign: "center", padding: "64px 20px 48px", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 600, height: 300, background: "radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <p style={{ color: "#4B5563", fontSize: 13, letterSpacing: 2, marginBottom: 16, fontWeight: 600 }}>INDIA'S SMARTEST JOB TRACKER</p>
+          <h1 style={{ fontSize: 48, fontWeight: 900, margin: "0 0 16px", letterSpacing: -2, lineHeight: 1, color: "white" }}>
+            Your next<br />
+            <span style={{ WebkitTextStroke: "1px rgba(99,102,241,0.6)", WebkitTextFillColor: "transparent" }}>govt job</span>
+            <br />starts here.
+          </h1>
+          <p style={{ color: "#4B5563", fontSize: 15, maxWidth: 400, margin: "0 auto 36px", lineHeight: 1.6 }}>
+            Real-time alerts for Army, Police, SSC, Banking & more. Never miss a deadline again.
+          </p>
+          <div style={{ position: "relative", maxWidth: 380, margin: "0 auto" }}>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search jobs..."
-              style={{ width: "100%", padding: "12px 16px 12px 40px", borderRadius: 10, border: "1px solid #27272A", background: "#18181B", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box" }}
+              placeholder="Search any job..."
+              style={{ width: "100%", padding: "14px 20px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.04)", color: "white", fontSize: 15, outline: "none", boxSizing: "border-box", backdropFilter: "blur(10px)" }}
             />
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      <div style={{ maxWidth: 700, margin: "0 auto", padding: "0 16px 80px" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px 80px" }}>
 
-        {/* Filters */}
+        {/* Category pills */}
         {page === "home" && (
-          <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap" }}>
-            {CATEGORIES.map(cat => (
-              <button key={cat} onClick={() => setActive(cat)} style={{
-                padding: "6px 14px", borderRadius: 8,
-                border: `1px solid ${active === cat ? "#6366F1" : "#27272A"}`,
-                background: active === cat ? "#1E1B4B" : "transparent",
-                color: active === cat ? "#818CF8" : "#52525B",
-                fontWeight: 500, fontSize: 13, cursor: "pointer"
-              }}>
-                {CAT_CONFIG[cat]?.emoji} {cat}
-              </button>
-            ))}
+          <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
+            {CATEGORIES.map(cat => {
+              const cfg = CAT_CONFIG[cat]
+              const isActive = active === cat
+              return (
+                <button key={cat} onClick={() => setActive(cat)} style={{
+                  padding: "7px 16px", borderRadius: 99,
+                  border: `1px solid ${isActive ? (cfg?.color || "#6366F1") + "44" : "rgba(255,255,255,0.07)"}`,
+                  background: isActive ? (cfg?.color || "#6366F1") + "18" : "transparent",
+                  color: isActive ? (cfg?.color || "#818CF8") : "#4B5563",
+                  fontWeight: isActive ? 600 : 400, fontSize: 13, cursor: "pointer",
+                  transition: "all 0.15s"
+                }}>
+                  {cfg?.emoji} {cat}
+                </button>
+              )
+            })}
           </div>
         )}
 
-        {/* Count */}
-        {page === "home" && (
-          <p style={{ color: "#3F3F46", fontSize: 12, marginBottom: 16 }}>
-            {filtered.length} job{filtered.length !== 1 ? "s" : ""} found
-          </p>
+        {/* Stats bar */}
+        {page === "home" && !loading && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, padding: "0 2px" }}>
+            <span style={{ color: "#374151", fontSize: 12 }}>{filtered.length} jobs</span>
+            <span style={{ color: "#374151", fontSize: 12 }}>Updated daily</span>
+          </div>
         )}
 
-        {/* Bookmarks */}
+        {/* Bookmarks page */}
         {page === "bookmarks" && (
-          <>
-            <h2 style={{ color: "white", fontWeight: 700, fontSize: 18, marginBottom: 20 }}>Saved Jobs</h2>
+          <div style={{ paddingTop: 32 }}>
+            <h2 style={{ color: "white", fontSize: 18, fontWeight: 700, marginBottom: 20 }}>Saved Jobs ({bookmarkedIds.length})</h2>
             {bookmarkedIds.length === 0 && (
-              <div style={{ textAlign: "center", padding: "60px 0", color: "#3F3F46" }}>
-                <p style={{ fontSize: 32, marginBottom: 8 }}>⭐</p>
-                <p style={{ fontSize: 14 }}>No saved jobs yet</p>
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#374151" }}>
+                <p style={{ fontSize: 40, marginBottom: 8 }}>★</p>
+                <p style={{ fontSize: 14 }}>Save jobs to track them here</p>
               </div>
             )}
             {notifications.filter(n => bookmarkedIds.includes(n.id)).map(n => (
               <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
             ))}
-          </>
+          </div>
         )}
 
         {/* Loading */}
         {page === "home" && loading && (
-          <div style={{ textAlign: "center", padding: "60px 0" }}>
-            <div style={{ color: "#3F3F46", fontSize: 14 }}>Loading jobs...</div>
+          <div style={{ textAlign: "center", padding: "80px 0", color: "#374151" }}>
+            <div style={{ fontSize: 13 }}>Fetching jobs...</div>
           </div>
         )}
 
         {/* Empty */}
         {page === "home" && !loading && filtered.length === 0 && (
-          <div style={{ textAlign: "center", padding: "60px 0", color: "#3F3F46" }}>
-            <p style={{ fontSize: 14 }}>No jobs found</p>
+          <div style={{ textAlign: "center", padding: "80px 0", color: "#374151" }}>
+            <p style={{ fontSize: 14 }}>No jobs found for "{search}"</p>
           </div>
         )}
 
-        {/* Cards */}
-        {page === "home" && filtered.map(n => (
+        {/* Job cards */}
+        {page === "home" && !loading && filtered.map(n => (
           <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
         ))}
       </div>
@@ -360,83 +378,81 @@ export default function App() {
 }
 
 function JobCard({ n, bookmarkedIds, toggleBookmark }) {
-  const cfg = CAT_CONFIG[n.category] || { color: "#818CF8", bg: "#1E1B4B", emoji: "📌" }
+  const cfg = CAT_CONFIG[n.category] || { color: "#6366F1", emoji: "📌" }
   const daysLeft = getDaysLeft(n.last_date)
   const saved = bookmarkedIds.includes(n.id)
   const urgent = daysLeft !== null && daysLeft <= 7 && daysLeft > 0
   const expired = daysLeft !== null && daysLeft <= 0
+  const [hovered, setHovered] = useState(false)
 
   return (
-    <div style={{
-      background: "#18181B",
-      borderRadius: 12, padding: "16px 18px", marginBottom: 8,
-      border: `1px solid ${urgent ? "#78350F" : expired ? "#3F3F46" : "#27272A"}`,
-      display: "flex", justifyContent: "space-between",
-      alignItems: "center", gap: 12, flexWrap: "wrap",
-      opacity: expired ? 0.5 : 1
-    }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 14, padding: "16px 18px", marginBottom: 8,
+        border: `1px solid ${hovered ? cfg.color + "33" : "rgba(255,255,255,0.06)"}`,
+        background: hovered ? cfg.color + "08" : "rgba(255,255,255,0.02)",
+        display: "flex", justifyContent: "space-between",
+        alignItems: "center", gap: 12, flexWrap: "wrap",
+        transition: "all 0.2s", opacity: expired ? 0.4 : 1,
+        cursor: "default"
+      }}>
       <div style={{ flex: 1, minWidth: 180 }}>
-        <div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ background: cfg.bg, color: cfg.color, padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>
-            {cfg.emoji} {n.category}
+        <div style={{ display: "flex", gap: 6, marginBottom: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <span style={{ color: cfg.color, fontSize: 11, fontWeight: 700, letterSpacing: 0.5 }}>
+            {cfg.emoji} {n.category.toUpperCase()}
           </span>
           {isNew(n.posted_on) && !expired && (
-            <span style={{ background: "#14532D", color: "#4ADE80", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>New</span>
+            <span style={{ background: "rgba(34,197,94,0.12)", color: "#22C55E", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(34,197,94,0.2)" }}>NEW</span>
           )}
           {urgent && (
-            <span style={{ background: "#78350F", color: "#FCD34D", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>⚡ {daysLeft}d left</span>
-          )}
-          {expired && (
-            <span style={{ background: "#1C1917", color: "#78716C", padding: "2px 8px", borderRadius: 6, fontSize: 11 }}>Expired</span>
+            <span style={{ background: "rgba(251,191,36,0.12)", color: "#FBBF24", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(251,191,36,0.2)" }}>⚡ {daysLeft}d</span>
           )}
         </div>
-        <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: "#E4E4E7", lineHeight: 1.4 }}>{n.title}</h3>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {!expired && daysLeft !== null && !urgent && (
-            <span style={{ fontSize: 12, color: "#52525B" }}>📅 {n.last_date}</span>
-          )}
-          {(daysLeft === null || urgent) && (
-            <span style={{ fontSize: 12, color: "#52525B" }}>📅 {n.last_date}</span>
-          )}
-          <span style={{ fontSize: 12, color: "#3F3F46" }}>{n.source}</span>
+        <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: expired ? "#4B5563" : "#E5E7EB", lineHeight: 1.4 }}>{n.title}</h3>
+        <div style={{ display: "flex", gap: 16 }}>
+          <span style={{ fontSize: 12, color: "#374151" }}>📅 {n.last_date}</span>
+          <span style={{ fontSize: 12, color: "#1F2937" }}>{n.source}</span>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 6, flexShrink: 0, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
         <button onClick={() => toggleBookmark(n.id)} style={{
-          background: "transparent",
-          border: "1px solid #27272A",
-          color: saved ? "#FBBF24" : "#3F3F46",
-          borderRadius: 8, padding: "7px 10px",
-          cursor: "pointer", fontSize: 14,
-          transition: "all 0.2s"
+          background: "transparent", border: "1px solid rgba(255,255,255,0.08)",
+          color: saved ? "#FBBF24" : "#374151", borderRadius: 8,
+          padding: "7px 10px", cursor: "pointer", fontSize: 14, transition: "all 0.2s"
         }}>{saved ? "★" : "☆"}</button>
         {!expired && (
           <a href={n.link} target="_blank" rel="noreferrer" style={{
-            background: "#6366F1",
-            color: "white", padding: "8px 16px", borderRadius: 8,
-            textDecoration: "none", fontSize: 13, fontWeight: 600,
-            whiteSpace: "nowrap"
-          }}>Apply</a>
+            background: cfg.color + "22",
+            color: cfg.color,
+            border: `1px solid ${cfg.color}44`,
+            padding: "8px 18px", borderRadius: 8,
+            textDecoration: "none", fontSize: 13, fontWeight: 700,
+            whiteSpace: "nowrap", transition: "all 0.2s"
+          }}>Apply →</a>
         )}
       </div>
     </div>
   )
 }
 
-const inputStyle = {
-  width: "100%", padding: "10px 12px", borderRadius: 8,
-  border: "1px solid #27272A", background: "#09090B",
+const inpS = {
+  width: "100%", padding: "11px 14px", borderRadius: 10,
+  border: "1px solid rgba(255,255,255,0.08)",
+  background: "rgba(255,255,255,0.04)",
   color: "white", fontSize: 14, outline: "none",
   marginTop: 6, boxSizing: "border-box", display: "block"
 }
 
-const labelStyle = {
-  color: "#A1A1AA", fontSize: 13, fontWeight: 500, display: "block"
+const labelS = {
+  color: "#6B7280", fontSize: 12, fontWeight: 600,
+  letterSpacing: 0.5, display: "block"
 }
 
-const ghostBtn = {
-  padding: "6px 12px", borderRadius: 8,
-  border: "1px solid #27272A",
-  background: "transparent", color: "#71717A",
-  fontSize: 13, cursor: "pointer", fontWeight: 500
+const navPill = {
+  padding: "5px 12px", borderRadius: 8,
+  border: "1px solid rgba(255,255,255,0.08)",
+  background: "transparent", color: "#6B7280",
+  fontSize: 12, cursor: "pointer", fontWeight: 500
 }
