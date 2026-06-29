@@ -3,14 +3,14 @@ import { useEffect, useState } from "react"
 const API = "https://govnotify-ecxe.onrender.com"
 const CATEGORIES = ["All", "Police", "Army", "SSC", "Railway", "Banking", "UPSC", "Post Office", "KPSC"]
 const CAT_CONFIG = {
-  Police:        { color: "#3B82F6", emoji: "👮" },
-  Army:          { color: "#22C55E", emoji: "🪖" },
-  SSC:           { color: "#F97316", emoji: "📋" },
-  Railway:       { color: "#A855F7", emoji: "🚆" },
-  Banking:       { color: "#EAB308", emoji: "🏦" },
-  UPSC:          { color: "#EC4899", emoji: "📚" },
-  "Post Office": { color: "#14B8A6", emoji: "📮" },
-  KPSC:          { color: "#F43F5E", emoji: "🏛️" },
+  Police:        { color: "#60A5FA", bg: "#1E3A5F", emoji: "👮" },
+  Army:          { color: "#34D399", bg: "#1A3A2A", emoji: "🪖" },
+  SSC:           { color: "#FB923C", bg: "#3A1F0A", emoji: "📋" },
+  Railway:       { color: "#C084FC", bg: "#2D1A4A", emoji: "🚆" },
+  Banking:       { color: "#FBBF24", bg: "#3A2A00", emoji: "🏦" },
+  UPSC:          { color: "#F472B6", bg: "#3A0A2A", emoji: "📚" },
+  "Post Office": { color: "#2DD4BF", bg: "#0A2A2A", emoji: "📮" },
+  KPSC:          { color: "#F87171", bg: "#3A0A0A", emoji: "🏛️" },
 }
 
 function getDaysLeft(dateStr) {
@@ -138,131 +138,100 @@ export default function App() {
 
   const strength = getPasswordStrength(form.password)
 
-  // Auth Pages
   if (page === "login" || page === "register") {
     return (
-      <div style={{ minHeight: "100vh", background: "#080814", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', sans-serif", padding: 16 }}>
-        <div style={{ background: "#16162A", borderRadius: 24, padding: "36px 32px", width: "100%", maxWidth: 400, border: "1px solid #2D2D4E", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
-          
-          {/* Logo */}
-          <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>🇮🇳</div>
-            <h2 style={{ color: "white", margin: 0, fontSize: 22, fontWeight: 800 }}>
-              {page === "login" ? "Welcome Back" : "Create Account"}
-            </h2>
-            <p style={{ color: "#6B7280", fontSize: 13, margin: "6px 0 0" }}>
-              {page === "login" ? "Login to access your saved jobs" : "Join GovNotify for free"}
+      <div style={{ minHeight: "100vh", background: "#09090B", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', sans-serif", padding: 16 }}>
+        <div style={{ width: "100%", maxWidth: 380 }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ width: 48, height: 48, borderRadius: 14, background: "linear-gradient(135deg, #6366F1, #8B5CF6)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 22 }}>🇮🇳</div>
+            <h1 style={{ color: "white", margin: "0 0 6px", fontSize: 22, fontWeight: 700 }}>
+              {page === "login" ? "Welcome back" : "Create account"}
+            </h1>
+            <p style={{ color: "#71717A", fontSize: 14, margin: 0 }}>
+              {page === "login" ? "Sign in to your GovNotify account" : "Start tracking government jobs today"}
             </p>
           </div>
 
-          {/* Form */}
-          {page === "register" && (
-            <div style={{ marginBottom: 12 }}>
-              <label style={{ color: "#9CA3AF", fontSize: 12, fontWeight: 600, letterSpacing: 0.5 }}>FULL NAME</label>
-              <input
-                placeholder="Enter your name"
-                value={form.name}
-                onChange={e => setForm({ ...form, name: e.target.value })}
-                style={inputStyle}
-              />
-            </div>
-          )}
-
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ color: "#9CA3AF", fontSize: 12, fontWeight: 600, letterSpacing: 0.5 }}>EMAIL</label>
-            <input
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
-              style={inputStyle}
-            />
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <label style={{ color: "#9CA3AF", fontSize: 12, fontWeight: 600, letterSpacing: 0.5 }}>PASSWORD</label>
-            <div style={{ position: "relative" }}>
-              <input
-                placeholder={page === "register" ? "Min 8 chars, uppercase, number, symbol" : "Enter your password"}
-                type={showPassword ? "text" : "password"}
-                value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
-                style={{ ...inputStyle, paddingRight: 44 }}
-              />
-              <button
-                onClick={() => setShowPassword(!showPassword)}
-                style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#6B7280", cursor: "pointer", fontSize: 16 }}
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
-            </div>
-          </div>
-
-          {/* Password strength bar */}
-          {page === "register" && form.password.length > 0 && (
-            <div style={{ marginBottom: 12 }}>
-              <div style={{ background: "#0F0F1A", borderRadius: 4, height: 4, overflow: "hidden" }}>
-                <div style={{ height: "100%", width: strength.width, background: strength.color, transition: "all 0.3s", borderRadius: 4 }} />
+          <div style={{ background: "#18181B", borderRadius: 16, padding: 24, border: "1px solid #27272A" }}>
+            {page === "register" && (
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Full Name</label>
+                <input placeholder="Sanket S R" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} />
               </div>
-              <p style={{ color: strength.color, fontSize: 11, margin: "4px 0 0", fontWeight: 600 }}>{strength.label}</p>
-            </div>
-          )}
+            )}
 
-          {/* Password rules */}
-          {page === "register" && (
-            <div style={{ marginBottom: 16, padding: "10px 14px", background: "#0F0F1A", borderRadius: 10, border: "1px solid #2D2D4E" }}>
-              {[
-                { rule: /.{8,}/, label: "At least 8 characters" },
-                { rule: /[A-Z]/, label: "One uppercase letter" },
-                { rule: /[a-z]/, label: "One lowercase letter" },
-                { rule: /[0-9]/, label: "One number" },
-                { rule: /[!@#$%^&*]/, label: "One special character (!@#$%^&*)" },
-              ].map(({ rule, label }) => (
-                <div key={label} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <span style={{ color: rule.test(form.password) ? "#22C55E" : "#4B5563", fontSize: 12 }}>
-                    {rule.test(form.password) ? "✅" : "○"}
-                  </span>
-                  <span style={{ color: rule.test(form.password) ? "#22C55E" : "#4B5563", fontSize: 12 }}>
-                    {label}
-                  </span>
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>Email</label>
+              <input placeholder="you@gmail.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} style={inputStyle} />
+            </div>
+
+            <div style={{ marginBottom: page === "register" ? 8 : 20 }}>
+              <label style={labelStyle}>Password</label>
+              <div style={{ position: "relative" }}>
+                <input
+                  placeholder={page === "register" ? "Min 8 chars, A-Z, 0-9, !@#" : "••••••••"}
+                  type={showPassword ? "text" : "password"}
+                  value={form.password}
+                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  style={{ ...inputStyle, paddingRight: 40 }}
+                />
+                <button onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#52525B", cursor: "pointer", fontSize: 14 }}>
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+            </div>
+
+            {page === "register" && form.password.length > 0 && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                  <span style={{ color: "#52525B", fontSize: 12 }}>Password strength</span>
+                  <span style={{ color: strength.color, fontSize: 12, fontWeight: 600 }}>{strength.label}</span>
                 </div>
-              ))}
-            </div>
-          )}
+                <div style={{ background: "#27272A", borderRadius: 4, height: 3 }}>
+                  <div style={{ height: "100%", width: strength.width, background: strength.color, borderRadius: 4, transition: "all 0.3s" }} />
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginTop: 10 }}>
+                  {[
+                    { rule: /.{8,}/, label: "8+ characters" },
+                    { rule: /[A-Z]/, label: "Uppercase" },
+                    { rule: /[a-z]/, label: "Lowercase" },
+                    { rule: /[0-9]/, label: "Number" },
+                    { rule: /[!@#$%^&*]/, label: "Special char" },
+                  ].map(({ rule, label }) => (
+                    <div key={label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: rule.test(form.password) ? "#22C55E" : "#3F3F46", flexShrink: 0 }} />
+                      <span style={{ color: rule.test(form.password) ? "#22C55E" : "#52525B", fontSize: 11 }}>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-          {/* Error */}
-          {formError && (
-            <div style={{ background: "#EF444422", border: "1px solid #EF4444", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-              <p style={{ color: "#EF4444", fontSize: 13, margin: 0 }}>⚠️ {formError}</p>
-            </div>
-          )}
+            {formError && (
+              <div style={{ background: "#1C0A0A", border: "1px solid #7F1D1D", borderRadius: 8, padding: "10px 12px", marginBottom: 16 }}>
+                <p style={{ color: "#FCA5A5", fontSize: 13, margin: 0 }}>{formError}</p>
+              </div>
+            )}
 
-          {/* Submit */}
-          <button
-            onClick={() => handleAuth(page)}
-            disabled={authLoading}
-            style={{
-              width: "100%", padding: "13px", borderRadius: 12,
-              background: authLoading ? "#4B5563" : "linear-gradient(135deg, #6366F1, #8B5CF6)",
-              color: "white", border: "none", fontSize: 15,
-              fontWeight: 700, cursor: authLoading ? "not-allowed" : "pointer",
-              marginBottom: 16
-            }}
-          >
-            {authLoading ? "Please wait..." : page === "login" ? "Login →" : "Create Account →"}
-          </button>
+            <button onClick={() => handleAuth(page)} disabled={authLoading} style={{
+              width: "100%", padding: "11px", borderRadius: 10,
+              background: authLoading ? "#3F3F46" : "#6366F1",
+              color: "white", border: "none", fontSize: 14,
+              fontWeight: 600, cursor: authLoading ? "not-allowed" : "pointer",
+              marginBottom: 16, transition: "background 0.2s"
+            }}>
+              {authLoading ? "Please wait..." : page === "login" ? "Sign in" : "Create account"}
+            </button>
 
-          {/* Switch */}
-          <p style={{ textAlign: "center", fontSize: 13, color: "#6B7280", margin: "0 0 12px" }}>
-            {page === "login" ? "Don't have an account? " : "Already have an account? "}
-            <span
-              onClick={() => { setPage(page === "login" ? "register" : "login"); setFormError(""); setForm({ name: "", email: "", password: "" }) }}
-              style={{ color: "#6366F1", cursor: "pointer", fontWeight: 600 }}
-            >
-              {page === "login" ? "Register" : "Login"}
-            </span>
-          </p>
+            <p style={{ textAlign: "center", fontSize: 13, color: "#52525B", margin: 0 }}>
+              {page === "login" ? "No account? " : "Have account? "}
+              <span onClick={() => { setPage(page === "login" ? "register" : "login"); setFormError(""); setForm({ name: "", email: "", password: "" }) }} style={{ color: "#818CF8", cursor: "pointer", fontWeight: 500 }}>
+                {page === "login" ? "Sign up" : "Sign in"}
+              </span>
+            </p>
+          </div>
 
-          <p onClick={() => { setPage("home"); setFormError("") }} style={{ textAlign: "center", fontSize: 13, color: "#4B5563", cursor: "pointer", margin: 0 }}>
+          <p onClick={() => { setPage("home"); setFormError("") }} style={{ textAlign: "center", fontSize: 13, color: "#3F3F46", cursor: "pointer", marginTop: 16 }}>
             ← Back to home
           </p>
         </div>
@@ -271,171 +240,203 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#080814", color: "white", fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#09090B", color: "white", fontFamily: "'Segoe UI', sans-serif" }}>
 
-      {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #0f0c29, #302b63, #24243e)", padding: "70px 20px 40px", textAlign: "center", position: "relative" }}>
-
-        {/* Nav */}
-        <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+      {/* Navbar */}
+      <nav style={{ borderBottom: "1px solid #18181B", padding: "14px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, background: "#09090B", zIndex: 100 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #6366F1, #8B5CF6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🇮🇳</div>
+          <span style={{ fontWeight: 700, fontSize: 16, color: "white" }}>GovNotify</span>
+        </div>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           {user ? (
             <>
-              <button onClick={() => setPage("bookmarks")} style={{ ...navBtn, background: "#6366F133", borderColor: "#6366F1" }}>⭐ Saved</button>
-              <span style={{ color: "#a5b4fc", fontSize: 13 }}>Hi, {user.name.split(" ")[0]}!</span>
-              <button onClick={logout} style={navBtn}>Logout</button>
+              <button onClick={() => setPage(page === "bookmarks" ? "home" : "bookmarks")} style={{ ...ghostBtn, color: page === "bookmarks" ? "#818CF8" : "#71717A" }}>
+                {page === "bookmarks" ? "← Jobs" : `⭐ Saved (${bookmarkedIds.length})`}
+              </button>
+              <span style={{ color: "#3F3F46", fontSize: 13 }}>|</span>
+              <span style={{ color: "#71717A", fontSize: 13 }}>{user.name.split(" ")[0]}</span>
+              <button onClick={logout} style={ghostBtn}>Sign out</button>
             </>
           ) : (
             <>
-              <button onClick={() => { setPage("login"); setFormError("") }} style={navBtn}>Login</button>
-              <button onClick={() => { setPage("register"); setFormError("") }} style={{ ...navBtn, background: "#6366F1", borderColor: "#6366F1" }}>Register</button>
+              <button onClick={() => { setPage("login"); setFormError("") }} style={ghostBtn}>Sign in</button>
+              <button onClick={() => { setPage("register"); setFormError("") }} style={{ ...ghostBtn, background: "#6366F1", color: "white", border: "none" }}>Sign up</button>
             </>
           )}
         </div>
+      </nav>
 
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 999, padding: "6px 16px", marginBottom: 16 }}>
-          <span style={{ fontSize: 16 }}>🇮🇳</span>
-          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#a5b4fc" }}>INDIA</span>
+      {/* Hero */}
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "60px 20px 40px", textAlign: "center" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#18181B", border: "1px solid #27272A", borderRadius: 999, padding: "4px 12px", marginBottom: 20 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E", display: "inline-block" }} />
+          <span style={{ color: "#71717A", fontSize: 12 }}>Live job alerts</span>
         </div>
-
-        <h1 style={{ fontSize: 38, fontWeight: 900, margin: "0 0 8px", background: "linear-gradient(135deg, #fff 30%, #a5b4fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-          {page === "bookmarks" ? "⭐ Saved Jobs" : "GovNotify"}
+        <h1 style={{ fontSize: 40, fontWeight: 800, margin: "0 0 12px", letterSpacing: -1, color: "white", lineHeight: 1.1 }}>
+          Never miss a<br />
+          <span style={{ background: "linear-gradient(135deg, #818CF8, #C084FC)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>government job</span>
         </h1>
-        <p style={{ color: "#6B7280", fontSize: 14, margin: "0 0 24px" }}>
-          Real-time government job alerts — Army, Police, SSC & more
+        <p style={{ color: "#52525B", fontSize: 15, margin: "0 0 32px", lineHeight: 1.6 }}>
+          Real-time notifications for Army, Police, SSC, Banking and more. All in one place.
         </p>
 
         {page === "home" && (
-          <div style={{ maxWidth: 480, margin: "0 auto", position: "relative" }}>
-            <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", fontSize: 16 }}>🔍</span>
+          <div style={{ position: "relative", maxWidth: 400, margin: "0 auto" }}>
+            <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#3F3F46", fontSize: 15 }}>⌕</span>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search notifications..."
-              style={{ width: "100%", padding: "13px 16px 13px 44px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.07)", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box" }}
+              placeholder="Search jobs..."
+              style={{ width: "100%", padding: "12px 16px 12px 40px", borderRadius: 10, border: "1px solid #27272A", background: "#18181B", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box" }}
             />
           </div>
         )}
       </div>
 
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "24px 16px 60px" }}>
+      <div style={{ maxWidth: 700, margin: "0 auto", padding: "0 16px 80px" }}>
 
-        {/* Bookmarks page */}
+        {/* Filters */}
+        {page === "home" && (
+          <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap" }}>
+            {CATEGORIES.map(cat => (
+              <button key={cat} onClick={() => setActive(cat)} style={{
+                padding: "6px 14px", borderRadius: 8,
+                border: `1px solid ${active === cat ? "#6366F1" : "#27272A"}`,
+                background: active === cat ? "#1E1B4B" : "transparent",
+                color: active === cat ? "#818CF8" : "#52525B",
+                fontWeight: 500, fontSize: 13, cursor: "pointer"
+              }}>
+                {CAT_CONFIG[cat]?.emoji} {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Count */}
+        {page === "home" && (
+          <p style={{ color: "#3F3F46", fontSize: 12, marginBottom: 16 }}>
+            {filtered.length} job{filtered.length !== 1 ? "s" : ""} found
+          </p>
+        )}
+
+        {/* Bookmarks */}
         {page === "bookmarks" && (
           <>
-            <p onClick={() => setPage("home")} style={{ color: "#6366F1", cursor: "pointer", marginBottom: 16, fontSize: 14 }}>← Back to all jobs</p>
-            {bookmarkedIds.length === 0 && <p style={{ textAlign: "center", color: "#4B5563", padding: 40 }}>No saved jobs yet. Click ☆ to save a job.</p>}
+            <h2 style={{ color: "white", fontWeight: 700, fontSize: 18, marginBottom: 20 }}>Saved Jobs</h2>
+            {bookmarkedIds.length === 0 && (
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#3F3F46" }}>
+                <p style={{ fontSize: 32, marginBottom: 8 }}>⭐</p>
+                <p style={{ fontSize: 14 }}>No saved jobs yet</p>
+              </div>
+            )}
             {notifications.filter(n => bookmarkedIds.includes(n.id)).map(n => (
-              <Card key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
+              <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
             ))}
           </>
         )}
 
-        {/* Home page */}
-        {page === "home" && (
-          <>
-            {/* Filters */}
-            <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap", justifyContent: "center" }}>
-              {CATEGORIES.map(cat => (
-                <button key={cat} onClick={() => setActive(cat)} style={{
-                  padding: "8px 16px", borderRadius: 999,
-                  border: `1px solid ${active === cat ? "#6366F1" : "rgba(255,255,255,0.1)"}`,
-                  background: active === cat ? "#6366F1" : "rgba(255,255,255,0.04)",
-                  color: active === cat ? "white" : "#9CA3AF",
-                  fontWeight: 600, fontSize: 13, cursor: "pointer"
-                }}>{CAT_CONFIG[cat]?.emoji || "🗂️"} {cat}</button>
-              ))}
-            </div>
-
-            <p style={{ color: "#374151", fontSize: 13, textAlign: "center", marginBottom: 16 }}>
-              {filtered.length} result{filtered.length !== 1 ? "s" : ""} found
-            </p>
-
-            {loading && (
-              <div style={{ textAlign: "center", padding: 60 }}>
-                <p style={{ color: "#6B7280" }}>Loading notifications...</p>
-              </div>
-            )}
-
-            {!loading && filtered.length === 0 && (
-              <div style={{ textAlign: "center", padding: 60, color: "#374151" }}>
-                <p style={{ fontSize: 36 }}>🔍</p>
-                <p>No notifications found</p>
-              </div>
-            )}
-
-            {filtered.map(n => (
-              <Card key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
-            ))}
-          </>
+        {/* Loading */}
+        {page === "home" && loading && (
+          <div style={{ textAlign: "center", padding: "60px 0" }}>
+            <div style={{ color: "#3F3F46", fontSize: 14 }}>Loading jobs...</div>
+          </div>
         )}
+
+        {/* Empty */}
+        {page === "home" && !loading && filtered.length === 0 && (
+          <div style={{ textAlign: "center", padding: "60px 0", color: "#3F3F46" }}>
+            <p style={{ fontSize: 14 }}>No jobs found</p>
+          </div>
+        )}
+
+        {/* Cards */}
+        {page === "home" && filtered.map(n => (
+          <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
+        ))}
       </div>
     </div>
   )
 }
 
-function Card({ n, bookmarkedIds, toggleBookmark }) {
-  const cfg = CAT_CONFIG[n.category] || { color: "#6366F1", emoji: "📌" }
+function JobCard({ n, bookmarkedIds, toggleBookmark }) {
+  const cfg = CAT_CONFIG[n.category] || { color: "#818CF8", bg: "#1E1B4B", emoji: "📌" }
   const daysLeft = getDaysLeft(n.last_date)
   const saved = bookmarkedIds.includes(n.id)
+  const urgent = daysLeft !== null && daysLeft <= 7 && daysLeft > 0
+  const expired = daysLeft !== null && daysLeft <= 0
 
   return (
     <div style={{
-      background: "linear-gradient(135deg, #111128, #16162e)",
-      borderRadius: 20, padding: "18px 20px", marginBottom: 12,
-      border: "1px solid rgba(255,255,255,0.06)",
-      boxShadow: `0 0 0 1px ${cfg.color}22, 0 4px 24px rgba(0,0,0,0.3)`,
+      background: "#18181B",
+      borderRadius: 12, padding: "16px 18px", marginBottom: 8,
+      border: `1px solid ${urgent ? "#78350F" : expired ? "#3F3F46" : "#27272A"}`,
       display: "flex", justifyContent: "space-between",
-      alignItems: "center", gap: 14, flexWrap: "wrap"
+      alignItems: "center", gap: 12, flexWrap: "wrap",
+      opacity: expired ? 0.5 : 1
     }}>
-      <div style={{ flex: 1, minWidth: 200 }}>
+      <div style={{ flex: 1, minWidth: 180 }}>
         <div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ background: cfg.color + "22", color: cfg.color, padding: "3px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700 }}>
+          <span style={{ background: cfg.bg, color: cfg.color, padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>
             {cfg.emoji} {n.category}
           </span>
-          {isNew(n.posted_on) && (
-            <span style={{ background: "linear-gradient(135deg, #F59E0B, #EF4444)", color: "white", padding: "3px 8px", borderRadius: 999, fontSize: 10, fontWeight: 800 }}>🔥 NEW</span>
+          {isNew(n.posted_on) && !expired && (
+            <span style={{ background: "#14532D", color: "#4ADE80", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>New</span>
           )}
-          {daysLeft !== null && (
-            <span style={{ background: daysLeft <= 5 ? "#EF444422" : "#22C55E22", color: daysLeft <= 5 ? "#EF4444" : "#22C55E", padding: "3px 8px", borderRadius: 999, fontSize: 11, fontWeight: 700 }}>
-              {daysLeft <= 0 ? "⛔ Expired" : `⏳ ${daysLeft}d left`}
-            </span>
+          {urgent && (
+            <span style={{ background: "#78350F", color: "#FCD34D", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600 }}>⚡ {daysLeft}d left</span>
+          )}
+          {expired && (
+            <span style={{ background: "#1C1917", color: "#78716C", padding: "2px 8px", borderRadius: 6, fontSize: 11 }}>Expired</span>
           )}
         </div>
-        <h3 style={{ margin: "0 0 6px", fontSize: 15, fontWeight: 700, color: "#E5E7EB", lineHeight: 1.4 }}>{n.title}</h3>
-        <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 12, color: "#F59E0B" }}>📅 {n.last_date}</span>
-          <span style={{ fontSize: 12, color: "#4B5563" }}>🏛️ {n.source}</span>
+        <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: "#E4E4E7", lineHeight: 1.4 }}>{n.title}</h3>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {!expired && daysLeft !== null && !urgent && (
+            <span style={{ fontSize: 12, color: "#52525B" }}>📅 {n.last_date}</span>
+          )}
+          {(daysLeft === null || urgent) && (
+            <span style={{ fontSize: 12, color: "#52525B" }}>📅 {n.last_date}</span>
+          )}
+          <span style={{ fontSize: 12, color: "#3F3F46" }}>{n.source}</span>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 8, flexShrink: 0, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 6, flexShrink: 0, alignItems: "center" }}>
         <button onClick={() => toggleBookmark(n.id)} style={{
-          background: saved ? "#6366F133" : "transparent",
-          border: `1px solid ${saved ? "#6366F1" : "#2D2D4E"}`,
-          color: saved ? "#6366F1" : "#6B7280",
-          borderRadius: 10, padding: "9px 12px", cursor: "pointer", fontSize: 15
-        }}>{saved ? "⭐" : "☆"}</button>
-        <a href={n.link} target="_blank" rel="noreferrer" style={{
-          background: `linear-gradient(135deg, ${cfg.color}, ${cfg.color}bb)`,
-          color: "white", padding: "10px 18px", borderRadius: 12,
-          textDecoration: "none", fontSize: 13, fontWeight: 700,
-          boxShadow: `0 4px 15px ${cfg.color}44`, whiteSpace: "nowrap"
-        }}>Apply →</a>
+          background: "transparent",
+          border: "1px solid #27272A",
+          color: saved ? "#FBBF24" : "#3F3F46",
+          borderRadius: 8, padding: "7px 10px",
+          cursor: "pointer", fontSize: 14,
+          transition: "all 0.2s"
+        }}>{saved ? "★" : "☆"}</button>
+        {!expired && (
+          <a href={n.link} target="_blank" rel="noreferrer" style={{
+            background: "#6366F1",
+            color: "white", padding: "8px 16px", borderRadius: 8,
+            textDecoration: "none", fontSize: 13, fontWeight: 600,
+            whiteSpace: "nowrap"
+          }}>Apply</a>
+        )}
       </div>
     </div>
   )
 }
 
 const inputStyle = {
-  width: "100%", padding: "12px 14px", borderRadius: 10,
-  border: "1px solid #2D2D4E", background: "#0F0F1A",
+  width: "100%", padding: "10px 12px", borderRadius: 8,
+  border: "1px solid #27272A", background: "#09090B",
   color: "white", fontSize: 14, outline: "none",
-  marginTop: 6, marginBottom: 0, boxSizing: "border-box",
-  display: "block"
+  marginTop: 6, boxSizing: "border-box", display: "block"
 }
 
-const navBtn = {
-  padding: "7px 14px", borderRadius: 8,
-  border: "1px solid #2D2D4E",
-  background: "transparent", color: "white",
-  fontSize: 13, cursor: "pointer", fontWeight: 600
+const labelStyle = {
+  color: "#A1A1AA", fontSize: 13, fontWeight: 500, display: "block"
+}
+
+const ghostBtn = {
+  padding: "6px 12px", borderRadius: 8,
+  border: "1px solid #27272A",
+  background: "transparent", color: "#71717A",
+  fontSize: 13, cursor: "pointer", fontWeight: 500
 }
