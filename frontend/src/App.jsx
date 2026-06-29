@@ -138,7 +138,6 @@ export default function App() {
 
   const strength = getPasswordStrength(form.password)
 
-  // Auth page
   if (page === "login" || page === "register") {
     return (
       <div style={{
@@ -148,12 +147,10 @@ export default function App() {
         fontFamily: "'Segoe UI', sans-serif", padding: 16,
         position: "relative", overflow: "hidden"
       }}>
-        {/* Glow effects */}
         <div style={{ position: "absolute", top: "20%", left: "30%", width: 300, height: 300, background: "radial-gradient(circle, #6366F133 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "20%", right: "30%", width: 200, height: 200, background: "radial-gradient(circle, #8B5CF633 0%, transparent 70%)", pointerEvents: "none" }} />
 
         <div style={{ width: "100%", maxWidth: 360, position: "relative", zIndex: 1 }}>
-          {/* Logo */}
           <div style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>🇮🇳</div>
             <h1 style={{ color: "white", margin: "0 0 4px", fontSize: 20, fontWeight: 700 }}>
@@ -257,8 +254,28 @@ export default function App() {
   return (
     <div style={{ minHeight: "100vh", background: "#07070c", fontFamily: "'Segoe UI', sans-serif", color: "white" }}>
 
-      {/* Top nav */}
-      <header style={{ padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.05)", position: "sticky", top: 0, background: "rgba(7,7,12,0.9)", backdropFilter: "blur(12px)", zIndex: 100 }}>
+      <style>{`
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .job-card {
+          animation: fadeSlideUp 0.4s ease forwards;
+          opacity: 0;
+        }
+        .hero-text {
+          animation: fadeIn 0.8s ease forwards;
+        }
+        input::placeholder { color: #374151; }
+        * { box-sizing: border-box; }
+      `}</style>
+
+      {/* Navbar */}
+      <header style={{ padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.05)", position: "sticky", top: 0, background: "rgba(7,7,12,0.95)", backdropFilter: "blur(12px)", zIndex: 100 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 18 }}>🇮🇳</span>
           <span style={{ fontWeight: 700, fontSize: 15, letterSpacing: -0.3 }}>GovNotify</span>
@@ -282,46 +299,46 @@ export default function App() {
         </div>
       </header>
 
-      {/* Hero section */}
+      {/* Hero */}
       {page === "home" && (
-        <div style={{ textAlign: "center", padding: "64px 20px 48px", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 600, height: 300, background: "radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
-          <p style={{ color: "#4B5563", fontSize: 13, letterSpacing: 2, marginBottom: 16, fontWeight: 600 }}>INDIA'S SMARTEST JOB TRACKER</p>
-          <h1 style={{ fontSize: 48, fontWeight: 900, margin: "0 0 16px", letterSpacing: -2, lineHeight: 1, color: "white" }}>
+        <div className="hero-text" style={{ textAlign: "center", padding: "64px 20px 40px", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 600, height: 300, background: "radial-gradient(ellipse, rgba(99,102,241,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <p style={{ color: "#4B5563", fontSize: 12, letterSpacing: 3, marginBottom: 16, fontWeight: 600 }}>INDIA'S SMARTEST JOB TRACKER</p>
+          <h1 style={{ fontSize: 46, fontWeight: 900, margin: "0 0 14px", letterSpacing: -2, lineHeight: 1.05, color: "white" }}>
             Your next<br />
-            <span style={{ WebkitTextStroke: "1px rgba(99,102,241,0.6)", WebkitTextFillColor: "transparent" }}>govt job</span>
+            <span style={{ WebkitTextStroke: "1.5px rgba(99,102,241,0.7)", WebkitTextFillColor: "transparent" }}>govt job</span>
             <br />starts here.
           </h1>
-          <p style={{ color: "#4B5563", fontSize: 15, maxWidth: 400, margin: "0 auto 36px", lineHeight: 1.6 }}>
-            Real-time alerts for Army, Police, SSC, Banking & more. Never miss a deadline again.
+          <p style={{ color: "#4B5563", fontSize: 14, maxWidth: 380, margin: "0 auto 36px", lineHeight: 1.7 }}>
+            Real-time alerts for Army, Police, SSC, Banking & more. All in one place.
           </p>
-          <div style={{ position: "relative", maxWidth: 380, margin: "0 auto" }}>
+          <div style={{ position: "relative", maxWidth: 360, margin: "0 auto" }}>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search any job..."
-              style={{ width: "100%", padding: "14px 20px", borderRadius: 14, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.04)", color: "white", fontSize: 15, outline: "none", boxSizing: "border-box", backdropFilter: "blur(10px)" }}
+              style={{ width: "100%", padding: "13px 20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.04)", color: "white", fontSize: 14, outline: "none", backdropFilter: "blur(10px)" }}
             />
           </div>
         </div>
       )}
 
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 16px 80px" }}>
+      <div style={{ maxWidth: 700, margin: "0 auto", padding: "0 16px 80px" }}>
 
-        {/* Category pills */}
+        {/* Category filters */}
         {page === "home" && (
-          <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap", justifyContent: "center" }}>
             {CATEGORIES.map(cat => {
               const cfg = CAT_CONFIG[cat]
               const isActive = active === cat
               return (
                 <button key={cat} onClick={() => setActive(cat)} style={{
-                  padding: "7px 16px", borderRadius: 99,
-                  border: `1px solid ${isActive ? (cfg?.color || "#6366F1") + "44" : "rgba(255,255,255,0.07)"}`,
+                  padding: "6px 14px", borderRadius: 99,
+                  border: `1px solid ${isActive ? (cfg?.color || "#6366F1") + "55" : "rgba(255,255,255,0.07)"}`,
                   background: isActive ? (cfg?.color || "#6366F1") + "18" : "transparent",
                   color: isActive ? (cfg?.color || "#818CF8") : "#4B5563",
-                  fontWeight: isActive ? 600 : 400, fontSize: 13, cursor: "pointer",
-                  transition: "all 0.15s"
+                  fontWeight: isActive ? 600 : 400,
+                  fontSize: 13, cursor: "pointer", transition: "all 0.15s"
                 }}>
                   {cfg?.emoji} {cat}
                 </button>
@@ -330,26 +347,28 @@ export default function App() {
           </div>
         )}
 
-        {/* Stats bar */}
+        {/* Stats */}
         {page === "home" && !loading && (
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, padding: "0 2px" }}>
-            <span style={{ color: "#374151", fontSize: 12 }}>{filtered.length} jobs</span>
-            <span style={{ color: "#374151", fontSize: 12 }}>Updated daily</span>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 14, padding: "0 2px" }}>
+            <span style={{ color: "#374151", fontSize: 12 }}>{filtered.length} jobs found</span>
+            <span style={{ color: "#1F2937", fontSize: 12 }}>Updated daily</span>
           </div>
         )}
 
         {/* Bookmarks page */}
         {page === "bookmarks" && (
           <div style={{ paddingTop: 32 }}>
-            <h2 style={{ color: "white", fontSize: 18, fontWeight: 700, marginBottom: 20 }}>Saved Jobs ({bookmarkedIds.length})</h2>
+            <h2 style={{ color: "white", fontSize: 18, fontWeight: 700, marginBottom: 20 }}>
+              Saved Jobs ({bookmarkedIds.length})
+            </h2>
             {bookmarkedIds.length === 0 && (
               <div style={{ textAlign: "center", padding: "60px 0", color: "#374151" }}>
-                <p style={{ fontSize: 40, marginBottom: 8 }}>★</p>
-                <p style={{ fontSize: 14 }}>Save jobs to track them here</p>
+                <p style={{ fontSize: 36, marginBottom: 8 }}>★</p>
+                <p style={{ fontSize: 14 }}>No saved jobs yet. Click ☆ to save.</p>
               </div>
             )}
-            {notifications.filter(n => bookmarkedIds.includes(n.id)).map(n => (
-              <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
+            {notifications.filter(n => bookmarkedIds.includes(n.id)).map((n, i) => (
+              <JobCard key={n.id} n={n} index={i} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
             ))}
           </div>
         )}
@@ -364,20 +383,20 @@ export default function App() {
         {/* Empty */}
         {page === "home" && !loading && filtered.length === 0 && (
           <div style={{ textAlign: "center", padding: "80px 0", color: "#374151" }}>
-            <p style={{ fontSize: 14 }}>No jobs found for "{search}"</p>
+            <p style={{ fontSize: 14 }}>No jobs found</p>
           </div>
         )}
 
-        {/* Job cards */}
-        {page === "home" && !loading && filtered.map(n => (
-          <JobCard key={n.id} n={n} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
+        {/* Cards */}
+        {page === "home" && !loading && filtered.map((n, i) => (
+          <JobCard key={n.id} n={n} index={i} bookmarkedIds={bookmarkedIds} toggleBookmark={toggleBookmark} />
         ))}
       </div>
     </div>
   )
 }
 
-function JobCard({ n, bookmarkedIds, toggleBookmark }) {
+function JobCard({ n, bookmarkedIds, toggleBookmark, index }) {
   const cfg = CAT_CONFIG[n.category] || { color: "#6366F1", emoji: "📌" }
   const daysLeft = getDaysLeft(n.last_date)
   const saved = bookmarkedIds.includes(n.id)
@@ -387,15 +406,18 @@ function JobCard({ n, bookmarkedIds, toggleBookmark }) {
 
   return (
     <div
+      className="job-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         borderRadius: 14, padding: "16px 18px", marginBottom: 8,
-        border: `1px solid ${hovered ? cfg.color + "33" : "rgba(255,255,255,0.06)"}`,
-        background: hovered ? cfg.color + "08" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${hovered ? cfg.color + "44" : "rgba(255,255,255,0.06)"}`,
+        background: hovered ? cfg.color + "0a" : "rgba(255,255,255,0.015)",
         display: "flex", justifyContent: "space-between",
         alignItems: "center", gap: 12, flexWrap: "wrap",
-        transition: "all 0.2s", opacity: expired ? 0.4 : 1,
+        transition: "border 0.2s, background 0.2s",
+        opacity: expired ? 0.4 : 1,
+        animationDelay: `${index * 70}ms`,
         cursor: "default"
       }}>
       <div style={{ flex: 1, minWidth: 180 }}>
@@ -404,32 +426,37 @@ function JobCard({ n, bookmarkedIds, toggleBookmark }) {
             {cfg.emoji} {n.category.toUpperCase()}
           </span>
           {isNew(n.posted_on) && !expired && (
-            <span style={{ background: "rgba(34,197,94,0.12)", color: "#22C55E", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(34,197,94,0.2)" }}>NEW</span>
+            <span style={{ background: "rgba(34,197,94,0.1)", color: "#22C55E", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(34,197,94,0.25)" }}>NEW</span>
           )}
           {urgent && (
-            <span style={{ background: "rgba(251,191,36,0.12)", color: "#FBBF24", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(251,191,36,0.2)" }}>⚡ {daysLeft}d</span>
+            <span style={{ background: "rgba(251,191,36,0.1)", color: "#FBBF24", padding: "1px 7px", borderRadius: 99, fontSize: 10, fontWeight: 700, border: "1px solid rgba(251,191,36,0.25)" }}>⚡ {daysLeft}d left</span>
+          )}
+          {expired && (
+            <span style={{ color: "#374151", fontSize: 10 }}>Closed</span>
           )}
         </div>
-        <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: expired ? "#4B5563" : "#E5E7EB", lineHeight: 1.4 }}>{n.title}</h3>
-        <div style={{ display: "flex", gap: 16 }}>
-          <span style={{ fontSize: 12, color: "#374151" }}>📅 {n.last_date}</span>
+        <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: expired ? "#374151" : "#E5E7EB", lineHeight: 1.4 }}>{n.title}</h3>
+        <div style={{ display: "flex", gap: 14 }}>
+          <span style={{ fontSize: 12, color: "#4B5563" }}>📅 {n.last_date}</span>
           <span style={{ fontSize: 12, color: "#1F2937" }}>{n.source}</span>
         </div>
       </div>
       <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
         <button onClick={() => toggleBookmark(n.id)} style={{
-          background: "transparent", border: "1px solid rgba(255,255,255,0.08)",
-          color: saved ? "#FBBF24" : "#374151", borderRadius: 8,
-          padding: "7px 10px", cursor: "pointer", fontSize: 14, transition: "all 0.2s"
+          background: saved ? "rgba(251,191,36,0.1)" : "transparent",
+          border: `1px solid ${saved ? "rgba(251,191,36,0.3)" : "rgba(255,255,255,0.08)"}`,
+          color: saved ? "#FBBF24" : "#374151",
+          borderRadius: 8, padding: "7px 10px",
+          cursor: "pointer", fontSize: 14, transition: "all 0.2s"
         }}>{saved ? "★" : "☆"}</button>
         {!expired && (
           <a href={n.link} target="_blank" rel="noreferrer" style={{
-            background: cfg.color + "22",
+            background: cfg.color + "20",
             color: cfg.color,
-            border: `1px solid ${cfg.color}44`,
-            padding: "8px 18px", borderRadius: 8,
-            textDecoration: "none", fontSize: 13, fontWeight: 700,
-            whiteSpace: "nowrap", transition: "all 0.2s"
+            border: `1px solid ${cfg.color}40`,
+            padding: "8px 16px", borderRadius: 8,
+            textDecoration: "none", fontSize: 13, fontWeight: 600,
+            whiteSpace: "nowrap"
           }}>Apply →</a>
         )}
       </div>
@@ -442,7 +469,7 @@ const inpS = {
   border: "1px solid rgba(255,255,255,0.08)",
   background: "rgba(255,255,255,0.04)",
   color: "white", fontSize: 14, outline: "none",
-  marginTop: 6, boxSizing: "border-box", display: "block"
+  marginTop: 6, display: "block"
 }
 
 const labelS = {
