@@ -18,35 +18,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class RegisterSchema(BaseModel):
     name: str
     email: str
     password: str
 
+
 class LoginSchema(BaseModel):
     email: str
     password: str
 
+
 class BookmarkSchema(BaseModel):
     token: str
     notification_id: int
+
 
 class ChangePasswordSchema(BaseModel):
     token: str
     old_password: str
     new_password: str
 
+
 class UpdateNameSchema(BaseModel):
     token: str
     name: str
+
 
 @app.get("/")
 def root():
     return {"message": "GovNotify API is running!"}
 
+
 @app.get("/notifications")
 def get_notifications(db: Session = Depends(get_db)):
     return db.query(models.Notification).all()
+
 
 @app.post("/add-test-data")
 def add_test_data(db: Session = Depends(get_db)):
@@ -69,6 +77,15 @@ def add_test_data(db: Session = Depends(get_db)):
     db.commit()
     return {"message": "Test data added!"}
 
+
+@app.delete("/clear-users")
+def clear_users(db: Session = Depends(get_db)):
+    db.query(models.Bookmark).delete()
+    db.query(models.User).delete()
+    db.commit()
+    return {"message": "All users cleared"}
+
+
 @app.post("/register")
 def register(data: RegisterSchema, db: Session = Depends(get_db)):
     exists = db.query(models.User).filter_by(email=data.email).first()
@@ -85,6 +102,7 @@ def register(data: RegisterSchema, db: Session = Depends(get_db)):
     token = create_token({"user_id": user.id, "name": user.name})
     return {"token": token, "name": user.name}
 
+
 @app.post("/login")
 def login(data: LoginSchema, db: Session = Depends(get_db)):
     user = db.query(models.User).filter_by(email=data.email).first()
@@ -92,6 +110,7 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_token({"user_id": user.id, "name": user.name})
     return {"token": token, "name": user.name}
+
 
 @app.get("/profile/{token}")
 def get_profile(token: str, db: Session = Depends(get_db)):
@@ -109,6 +128,7 @@ def get_profile(token: str, db: Session = Depends(get_db)):
         "bookmarks": bookmark_count
     }
 
+
 @app.post("/change-password")
 def change_password(data: ChangePasswordSchema, db: Session = Depends(get_db)):
     payload = decode_token(data.token)
@@ -120,6 +140,7 @@ def change_password(data: ChangePasswordSchema, db: Session = Depends(get_db)):
     user.password = hash_password(data.new_password)
     db.commit()
     return {"message": "Password changed successfully"}
+
 
 @app.post("/update-name")
 def update_name(data: UpdateNameSchema, db: Session = Depends(get_db)):
@@ -133,6 +154,7 @@ def update_name(data: UpdateNameSchema, db: Session = Depends(get_db)):
     db.commit()
     new_token = create_token({"user_id": user.id, "name": user.name})
     return {"message": "Name updated!", "token": new_token, "name": user.name}
+
 
 @app.post("/bookmark")
 def add_bookmark(data: BookmarkSchema, db: Session = Depends(get_db)):
@@ -150,6 +172,7 @@ def add_bookmark(data: BookmarkSchema, db: Session = Depends(get_db)):
     db.add(models.Bookmark(user_id=payload["user_id"], notification_id=data.notification_id))
     db.commit()
     return {"message": "Bookmarked!"}
+
 
 @app.get("/bookmarks/{token}")
 def get_bookmarks(token: str, db: Session = Depends(get_db)):
