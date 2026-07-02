@@ -56,7 +56,7 @@ def get_notifications(db: Session = Depends(get_db)):
     return db.query(models.Notification).all()
 
 
-@app.get("/add-test-data")
+@app.post("/add-test-data")
 def add_test_data(db: Session = Depends(get_db)):
     test_data = [
         {"title": "Karnataka Police Constable Recruitment 2026", "category": "Police", "source": "Karnataka Police", "link": "https://cetonline.karnataka.gov.in/kea/", "last_date": "03 July 2026"},
