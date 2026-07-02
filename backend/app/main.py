@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from . import models
 from .database import engine, get_db
-from .scraper import run_all_scrapers
 from .auth import hash_password, verify_password, create_token, decode_token
 
 models.Base.metadata.create_all(bind=engine)
@@ -66,7 +65,7 @@ def add_test_data(db: Session = Depends(get_db)):
         {"title": "SBI Clerk Recruitment 2026", "category": "Banking", "source": "SBI", "link": "https://bank.sbi/web/careers/recruitment", "last_date": "August 2026"},
         {"title": "IBPS PO Recruitment 2026", "category": "Banking", "source": "IBPS", "link": "https://www.ibps.in/recruitment-notification/", "last_date": "September 2026"},
         {"title": "UPSC Civil Services 2027", "category": "UPSC", "source": "UPSC", "link": "https://upsc.gov.in/examinations/active-examinations", "last_date": "February 2027"},
-        {"title": "India Post GDS Recruitment 2026", "category": "Post Office", "source": "India Post", "link": "https://indiapostgdsonline.gov.in", "last_date": "October 2026"},
+        {"title": "India Post GDS Recruitment 2026", "category": "Post Office", "source": "India Post", "link": "https://indiapost.gov.in/gdsonlineengagement", "last_date": "October 2026"},
         {"title": "KPSC Group C Recruitment 2026", "category": "KPSC", "source": "KPSC", "link": "https://kpsc.kar.nic.in/recruitment.aspx", "last_date": "November 2026"},
         {"title": "Karnataka Armed Police CAR/DAR 2026", "category": "Police", "source": "Karnataka Police", "link": "https://cetonline.karnataka.gov.in/kea/", "last_date": "22 July 2026"},
     ]
@@ -84,6 +83,15 @@ def clear_users(db: Session = Depends(get_db)):
     db.query(models.User).delete()
     db.commit()
     return {"message": "All users cleared"}
+
+
+@app.delete("/clear-all")
+def clear_all(db: Session = Depends(get_db)):
+    db.query(models.Bookmark).delete()
+    db.query(models.User).delete()
+    db.query(models.Notification).delete()
+    db.commit()
+    return {"message": "Everything cleared"}
 
 
 @app.post("/register")
